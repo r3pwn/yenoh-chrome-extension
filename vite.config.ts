@@ -19,7 +19,11 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: './index.html',
+        'popup_window': './screens/popup.html'
       },
-    },
-  },
+      output: {
+        entryFileNames: `js/[name].js`,
+      }
+    }
+  }
 });

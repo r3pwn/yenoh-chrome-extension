@@ -36,10 +36,31 @@ function initPopup() {
     if (!event.origin.startsWith('chrome-extension://')) { return; }
 
     switch (event.data.type) {
+      case 'open-url-yenoh':
+        openOffscreenTab(event.data.url);
+        break;
       case 'close-yenoh':
       default:
         iframe.setAttribute('style', IFRAME_INACTIVE_STYLES);
         break;
     }
   });
+}
+
+async function openOffscreenTab(url) {
+  if (!url) {
+    throw new Error('silentOpen called without a URL');
+  }
+
+  const IFRAME_OFFSCREEN_STYLES = [
+    'position: fixed;',
+    'top: -200%;',
+    'right: -200%;',
+    'width: 1px;',
+    'height: 1px;'
+  ].join(' ');
+  const iframe = document.createElement('iframe');
+  iframe.src = url;
+  iframe.style = IFRAME_OFFSCREEN_STYLES;
+  document.body.appendChild(iframe);
 }

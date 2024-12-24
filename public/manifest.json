@@ -26,6 +26,10 @@
       "run_at": "document_end"
     }
   ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self';",
     "isolated_world": "script-src 'self'; object-src 'self';"
@@ -40,7 +44,7 @@
     "unlimitedStorage",
     "scripting",
     "webRequest",
-    "offscreen"
+    "declarativeNetRequest"
   ],
   "web_accessible_resources": [
     {
@@ -52,5 +56,6 @@
         "screens/*"
       ]
     }
-  ]
+  ],
+  "minimum_chrome_version": "101"
 }

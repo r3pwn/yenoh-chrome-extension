@@ -1,8 +1,10 @@
 import { useState } from 'react'
 import reactLogo from '../../assets/react.svg'
 import viteLogo from '/vite.svg'
+import { Button } from '@/components/ui/button';
+import { Typography } from '@/components/ui/typography';
 
-function PopupRoot() {
+export default function PopupRoot() {
   const [count, setCount] = useState(0)
 
   function closePopup() {
@@ -13,7 +15,7 @@ function PopupRoot() {
 
   return (
     <>
-      <div>
+      <div className='flex'>
         <a href="https://vitejs.dev" target="_blank" rel="noopener noreferrer">
           <img src={viteLogo} className="logo" alt="Vite logo" />
         </a>
@@ -21,12 +23,16 @@ function PopupRoot() {
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
-      <h1>Vite + React</h1>
-      <button onClick={closePopup}>Close</button>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
+      <Typography display="heading-sm" as="h1">
+        Vite + React
+      </Typography>
+      <div className='flex gap-1'>
+        <Button onClick={closePopup}>Close</Button>
+        <Button onClick={() => setCount((count) => count + 1)}>
           count is {count}
-        </button>
+        </Button>
+      </div>
+      <div className="card">
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>
@@ -37,5 +43,3 @@ function PopupRoot() {
     </>
   )
 }
-
-export default PopupRoot

@@ -25,24 +25,7 @@ function matchesUrl(currentUrl, urlToTest) {
 })();
 
 function initPopup() {
-  const IFRAME_ACTIVE_STYLES = [
-    'position: fixed;',
-    'top: 8px;',
-    'right: 8px;',
-    'background: white;',
-    'z-index: 100000;',
-    'width: 350px;',
-    'height: 400px;',
-    'border-radius: 8px;',
-    'border: none;',
-    'box-shadow: 0px 0px 8px currentColor;'
-  ].join(' ');
-  const IFRAME_INACTIVE_STYLES = 'display: none;';
-
-  const iframe = document.createElement('iframe');
-  iframe.src = chrome.runtime.getURL('screens/popup.html');
-  iframe.setAttribute('style', IFRAME_ACTIVE_STYLES)
-  document.body.appendChild(iframe);
+  const popupFrame = openPopupFrame();
 
   window.addEventListener('message', (event) => {
     // Verify the origin of the message
@@ -50,17 +33,39 @@ function initPopup() {
 
     switch (event.data.type) {
       case 'open-url-yenoh':
-        openOffscreenTab(event.data.url);
+        openOffscreenFrame(event.data.url);
         break;
       case 'close-yenoh':
       default:
-        iframe.setAttribute('style', IFRAME_INACTIVE_STYLES);
+        popupFrame.setAttribute('style', 'display: none;');
         break;
     }
   });
 }
 
-async function openOffscreenTab(url) {
+function openPopupFrame() {
+  const IFRAME_ACTIVE_STYLES = [
+    'position: fixed;',
+    'top: 8px;',
+    'right: 8px;',
+    'background: white;',
+    'z-index: 100000;',
+    'width: 300px;',
+    'height: 200px;',
+    'border-radius: 8px;',
+    'border: none;',
+    'box-shadow: 0px 0px 8px currentColor;'
+  ].join(' ');
+
+  const iframe = document.createElement('iframe');
+  iframe.src = chrome.runtime.getURL(`screens/popup.html?currentUrl=${encodeURI(window.location.href)}`);
+  iframe.setAttribute('style', IFRAME_ACTIVE_STYLES)
+  document.body.appendChild(iframe);
+
+  return iframe;
+}
+
+async function openOffscreenFrame(url) {
   if (!url) {
     throw new Error('silentOpen called without a URL');
   }

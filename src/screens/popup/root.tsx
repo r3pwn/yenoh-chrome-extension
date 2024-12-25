@@ -1,19 +1,28 @@
 import { Button } from '@/components/ui/button';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Typography } from '@/components/ui/typography';
+import { useAffiliateSelector } from '@/hooks/affiliate';
 import { X } from 'lucide-react';
-
+import { useState } from 'react';
 
 export default function PopupRoot() {
+  const { affiliateOptions } = useAffiliateSelector();
+  const [selectedUrl, setSelectedUrl] = useState('');
+
   function closePopup() {
     window.parent.postMessage({
-      type: 'myCustomEvent',
+      type: 'close-yenoh',
     }, '*');
   }
 
   function activateCreatorKickback() {
+    if (!selectedUrl) {
+      return;
+    }
+
     window.parent.postMessage({
       type: 'open-url-yenoh',
-      url: 'https://www.newegg.com/?nrtv_cid=7k6mf4dqcngtz&utm_source=howl-Steve%20Chan&utm_medium=affiliate&utm_campaign=afc-howl-Steve%20Chan-7k6mf4dqcngtz'
+      url: selectedUrl
     }, '*');
   }
 
@@ -25,8 +34,18 @@ export default function PopupRoot() {
       <Typography display="heading-sm" as="h1">
         Affiliate program found!
       </Typography>
-      <Button onClick={activateCreatorKickback}>
-        Activate creator kickback
+      <Select value={selectedUrl} onValueChange={setSelectedUrl}>
+        <SelectTrigger className="w-[180px]">
+          <SelectValue placeholder="Affiliate" />
+        </SelectTrigger>
+        <SelectContent>
+          {affiliateOptions.map((option, index) => {
+            return <SelectItem key={index} value={option.url}>{option.name}</SelectItem>
+          })}
+        </SelectContent>
+      </Select>
+      <Button disabled={!selectedUrl} onClick={activateCreatorKickback}>
+        Activate
       </Button>
     </>
   )

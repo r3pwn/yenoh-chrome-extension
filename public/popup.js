@@ -1,15 +1,28 @@
 'use strict';
 
-// temporary, until I determine how I should display the popup
-const MATCH_PATHS = [
-  /./,
-]
-const HREF_PATHS = [
-]
-
-if (MATCH_PATHS.some(matcher => matcher.test(window.location.pathname)) || HREF_PATHS.some(matcher => matcher.test(window.location.href))) {
-  initPopup()
+function getResourceContent(fileName) {
+  return fetch(chrome.runtime.getURL(fileName))
+    .then(resp => resp.json());
 }
+
+/**
+ * Returns true if the current URL matches the given pattern. Otherwise, returns false
+ * @param {string} currentUrl
+ * @param {string} urlToTest 
+ */
+function matchesUrl(currentUrl, urlToTest) {
+  const matcher = new RegExp(`^${urlToTest.replace('*', '(.*)')}$`);
+  return matcher.test(currentUrl)
+}
+
+(async () => {
+  const content = await getResourceContent("affiliateLinks.json");
+  const currentUrl = window.location.href;
+
+  if (content.some(entry => entry.urls?.some(url => matchesUrl(currentUrl, url)))) {
+    initPopup();
+  }
+})();
 
 function initPopup() {
   const IFRAME_ACTIVE_STYLES = [

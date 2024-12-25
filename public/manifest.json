@@ -53,7 +53,8 @@
         "https://*/*"
       ],
       "resources": [
-        "screens/*"
+        "screens/*",
+        "*.json"
       ]
     }
   ],

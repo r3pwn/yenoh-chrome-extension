@@ -1,0 +1,14 @@
+[
+  {
+    "urls": [
+      "https://www.newegg.com/p/*",
+      "https://secure.newegg.com/shop/cart"
+    ],
+    "affiliates": [
+      {
+        "name": "Test",
+        "url": "https://www.newegg.com/?nrtv_cid=7k6mf4dqcngtz&utm_source=howl-Steve%20Chan&utm_medium=affiliate&utm_campaign=afc-howl-Steve%20Chan-7k6mf4dqcngtz"
+      }
+    ]
+  }
+]

@@ -1,7 +1,9 @@
+import { Typography } from "@/components/ui/typography";
+
 export default function App() {
   return (
-    <div>
-      Main panel - preferences & other config
-    </div>
+    <Typography>
+      TODO - Main panel (preferences & other config)
+    </Typography>
   )
 }

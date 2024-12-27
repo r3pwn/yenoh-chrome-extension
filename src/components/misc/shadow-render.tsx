@@ -24,7 +24,7 @@ const ShadowRender = (
         <StrictMode>
           <style>{`:host { all: initial }`}</style>
           {props.stylesheet && <link rel="stylesheet" href={props.stylesheet} />}
-          <div id="root">
+          <div id="shadow-root">
             {props.children}
           </div>
         </StrictMode>

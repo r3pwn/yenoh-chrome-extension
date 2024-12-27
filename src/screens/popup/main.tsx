@@ -2,26 +2,26 @@ import ReactDOM from 'react-dom/client'
 import PopupRoot from './root.tsx'
 import { matchesUrl } from '@/utils.ts';
 import ShadowRender from '@/components/misc/shadow-render.tsx';
+import { AffiliateSite } from '@/types/data.ts';
 
 const SESSION_BLOCKER = 'yenoh-prevent-open';
 
-function getResourceContent(fileName: string) {
+function getResourceContent<T = unknown>(fileName: string) {
   return fetch(chrome.runtime.getURL(fileName))
-    .then(resp => resp.json());
+    .then(resp => resp.json() as T);
 }
 
-function matchesEntry(currentUrl: string, entry: any) {
-  return matchesUrl(currentUrl, entry.transaction_complete_url) || entry.urls?.some((url: string) => matchesUrl(currentUrl, url));
+function matchesEntry(currentUrl: string, entry: AffiliateSite) {
+  return matchesUrl(currentUrl, entry.transaction_complete_url) || entry.urls?.some((url) => matchesUrl(currentUrl, url));
 }
 
 (async () => {
-  const content = await getResourceContent("affiliateLinks.json");
+  const content = await getResourceContent<AffiliateSite[]>("affiliateLinks.json");
   const currentUrl = window.location.href;
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const affiliateSite = content.find((entry: any) => matchesEntry(currentUrl, entry));
+  const affiliateSite = content.find((entry: AffiliateSite) => matchesEntry(currentUrl, entry));
 
-  if (matchesUrl(currentUrl, affiliateSite?.transaction_complete_url)) {
+  if (matchesUrl(currentUrl, affiliateSite?.transaction_complete_url || '')) {
     sessionStorage.removeItem(SESSION_BLOCKER);
     return;
   } else if (sessionStorage.getItem(SESSION_BLOCKER) === 'true') {
@@ -29,12 +29,12 @@ function matchesEntry(currentUrl: string, entry: any) {
   }
 
   if (affiliateSite) {
-    initPopup();
+    initPopup(affiliateSite);
   }
 })();
 
-function initPopup() {
-  const popupFrame = openPopupFrame();
+function initPopup(entry: AffiliateSite) {
+  const popupFrame = openPopupFrame(entry);
 
   window.addEventListener('message', (event) => {
     // Verify the origin of the message
@@ -54,7 +54,7 @@ function initPopup() {
   });
 }
 
-function openPopupFrame() {
+function openPopupFrame(entry: AffiliateSite) {
   const popupFrame = document.createElement('div');
   popupFrame.setAttribute('style', [
     'position: fixed;',
@@ -73,7 +73,7 @@ function openPopupFrame() {
 
   ReactDOM.createRoot(popupFrame).render(
     <ShadowRender stylesheet={chrome.runtime.getURL('index.css')}>
-      <PopupRoot currentUrl={window.location.href.toString()} />
+      <PopupRoot site={entry} />
     </ShadowRender>,
   )
 

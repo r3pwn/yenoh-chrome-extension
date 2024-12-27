@@ -1,12 +1,11 @@
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Typography } from '@/components/ui/typography';
-import { useAffiliateSelector } from '@/hooks/affiliate';
+import { AffiliateSite } from '@/types/data';
 import { X } from 'lucide-react';
 import { useState } from 'react';
 
-export default function PopupRoot({ currentUrl }: { currentUrl: string }) {
-  const { affiliateOptions } = useAffiliateSelector(currentUrl);
+export default function PopupRoot({ site }: { site: AffiliateSite }) {
   const [selectedUrl, setSelectedUrl] = useState('');
 
   function closePopup() {
@@ -43,7 +42,7 @@ export default function PopupRoot({ currentUrl }: { currentUrl: string }) {
             <SelectValue placeholder="Affiliate" />
           </SelectTrigger>
           <SelectContent>
-            {affiliateOptions.map((option, index) => {
+            {site.affiliates.map((option, index) => {
               return <SelectItem key={index} value={option.url}>{option.name}</SelectItem>
             })}
           </SelectContent>

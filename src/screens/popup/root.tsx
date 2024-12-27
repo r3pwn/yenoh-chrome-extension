@@ -5,8 +5,8 @@ import { useAffiliateSelector } from '@/hooks/affiliate';
 import { X } from 'lucide-react';
 import { useState } from 'react';
 
-export default function PopupRoot() {
-  const { affiliateOptions } = useAffiliateSelector();
+export default function PopupRoot({ currentUrl }: { currentUrl: string }) {
+  const { affiliateOptions } = useAffiliateSelector(currentUrl);
   const [selectedUrl, setSelectedUrl] = useState('');
 
   function closePopup() {
@@ -28,7 +28,7 @@ export default function PopupRoot() {
 
   return (
     <>
-      <Button variant="ghost" size="icon" className='fixed top-1 right-1' onClick={closePopup}>
+      <Button variant="ghost" size="icon" className='fixed top-4 right-4' onClick={closePopup}>
         <X className='w-[24px] h-[24px]' />
       </Button>
       <Typography display="heading-sm" as="h1">

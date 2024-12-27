@@ -16,7 +16,7 @@
     {
       "all_frames": false,
       "js": [
-        "popup.js"
+        "popup-shim.js"
       ],
       "match_about_blank": false,
       "matches": [
@@ -54,6 +54,9 @@
       ],
       "resources": [
         "screens/*",
+        "js/*",
+        "assets/*",
+        "index.css",
         "*.json"
       ]
     }

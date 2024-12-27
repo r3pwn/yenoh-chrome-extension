@@ -25,9 +25,11 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: './screens/index.html',
+        popup: './src/screens/popup/main.tsx',
         'popup_window': './screens/popup.html'
       },
       output: {
+        assetFileNames: 'index.css',
         entryFileNames: `js/[name].js`,
       }
     }

@@ -1,7 +1,8 @@
-# React Chrome Extension Template
+# Yenoh - a Chrome Extension
 
-This is a template for creating a Chrome extension using React and [Vite](https://vitejs.dev/) with TypeScript.
+This is a Chrome extension built using React and [Vite](https://vitejs.dev/) with TypeScript.
 
+**NOTE**: Any relation to any browser extension (existing or planned) is entirely coincidental.
 
 ## Getting Started
 
@@ -15,7 +16,7 @@ Make sure you have [Node.js](https://nodejs.org/) (version 18+ or 20+) installed
 
     ```sh
     # To clone
-    git clone https://github.com/5tigerjelly/chrome-extension-react-template
+    git clone https://github.com/r3pwn/yenoh-chrome-extension
     cd chrome-extension-react-template
     ```
 
@@ -51,7 +52,7 @@ This will generate the build files in the `build` directory.
 2. Enable "Developer mode" using the toggle switch in the top right corner.
 3. Click "Load unpacked" and select the `build` directory.
 
-Your React app should now be loaded as a Chrome extension!
+Yenoh should now be loaded as a Chrome extension!
 
 ## 🗂️ Project Structure
 

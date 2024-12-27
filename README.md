@@ -17,7 +17,7 @@ Make sure you have [Node.js](https://nodejs.org/) (version 18+ or 20+) installed
     ```sh
     # To clone
     git clone https://github.com/r3pwn/yenoh-chrome-extension
-    cd chrome-extension-react-template
+    cd yenoh-chrome-extension
     ```
 
 2. Install the dependencies:
@@ -57,7 +57,7 @@ Yenoh should now be loaded as a Chrome extension!
 ## 🗂️ Project Structure
 
 - `public/`: Contains static files and the `manifest.json`.
-- `src/`: Contains the React app source code.
+- `src/`: Contains the React source code.
 - `vite.config.ts`: Vite configuration file.
 - `tsconfig.json`: TypeScript configuration file.
 - `package.json`: Contains the project dependencies and scripts.

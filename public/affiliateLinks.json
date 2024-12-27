@@ -4,6 +4,7 @@
       "https://www.newegg.com/p/*",
       "https://secure.newegg.com/shop/cart"
     ],
+    "transaction_complete_url": "https://secure.newegg.com/shop/unknown/todo-update-this",
     "affiliates": [
       {
         "name": "Test",

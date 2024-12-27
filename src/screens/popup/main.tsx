@@ -3,9 +3,15 @@ import PopupRoot from './root.tsx'
 import { matchesUrl } from '@/utils.ts';
 import ShadowRender from '@/components/misc/shadow-render.tsx';
 
+const SESSION_BLOCKER = 'yenoh-prevent-open';
+
 function getResourceContent(fileName: string) {
   return fetch(chrome.runtime.getURL(fileName))
     .then(resp => resp.json());
+}
+
+function matchesEntry(currentUrl: string, entry: any) {
+  return matchesUrl(currentUrl, entry.transaction_complete_url) || entry.urls?.some((url: string) => matchesUrl(currentUrl, url));
 }
 
 (async () => {
@@ -13,7 +19,16 @@ function getResourceContent(fileName: string) {
   const currentUrl = window.location.href;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  if (content.some((entry: any) => entry.urls?.some((url: string) => matchesUrl(currentUrl, url)))) {
+  const affiliateSite = content.find((entry: any) => matchesEntry(currentUrl, entry));
+
+  if (matchesUrl(currentUrl, affiliateSite?.transaction_complete_url)) {
+    sessionStorage.removeItem(SESSION_BLOCKER);
+    return;
+  } else if (sessionStorage.getItem(SESSION_BLOCKER) === 'true') {
+    return;
+  }
+
+  if (affiliateSite) {
     initPopup();
   }
 })();
@@ -31,6 +46,7 @@ function initPopup() {
         break;
       case 'close-yenoh':
         popupFrame.setAttribute('style', 'display: none;');
+        sessionStorage.setItem(SESSION_BLOCKER, 'true');
         break;
       default:
         break;

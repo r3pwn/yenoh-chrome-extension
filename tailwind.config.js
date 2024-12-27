@@ -41,7 +41,16 @@ export default {
         '3xl': '30px',
         '4xl': '36px'
       },
-      colors: {}
+      colors: {
+        background: {
+          DEFAULT: '#0e2023'
+        },
+        primary: {
+          DEFAULT: '#1D4147',
+          hover: '#28545c',
+          active: '#3b6f78'
+        }
+      }
     }
   },
   plugins: [twAnimate],

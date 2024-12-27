@@ -47,7 +47,7 @@ function openPopupFrame() {
     'background: white;',
     'z-index: 100000;',
     'width: 300px;',
-    'height: 200px;',
+    'height: 150px;',
     'border-radius: 8px;',
     'border: none;',
     'box-shadow: 0px 0px 8px currentColor;',

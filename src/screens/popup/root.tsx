@@ -24,29 +24,34 @@ export default function PopupRoot({ currentUrl }: { currentUrl: string }) {
       type: 'open-url-yenoh',
       url: selectedUrl
     }, '*');
+
+    closePopup();
   }
 
   return (
     <>
+      <img src={chrome.runtime.getURL("/icons/48.png")} height={24} width={24} alt="Yenoh logo" className='mr-auto' />
       <Button variant="ghost" size="icon" className='fixed top-4 right-4' onClick={closePopup}>
         <X className='w-[24px] h-[24px]' />
       </Button>
-      <Typography display="heading-sm" as="h1">
+      <Typography display="heading-sm" as="h1" className='mr-auto'>
         Affiliate program found!
       </Typography>
-      <Select value={selectedUrl} onValueChange={setSelectedUrl}>
-        <SelectTrigger className="w-[180px]">
-          <SelectValue placeholder="Affiliate" />
-        </SelectTrigger>
-        <SelectContent>
-          {affiliateOptions.map((option, index) => {
-            return <SelectItem key={index} value={option.url}>{option.name}</SelectItem>
-          })}
-        </SelectContent>
-      </Select>
-      <Button disabled={!selectedUrl} onClick={activateCreatorKickback}>
-        Activate
-      </Button>
+      <div className='flex flex-row gap-2'>
+        <Select value={selectedUrl} onValueChange={setSelectedUrl}>
+          <SelectTrigger className="w-[180px]">
+            <SelectValue placeholder="Affiliate" />
+          </SelectTrigger>
+          <SelectContent>
+            {affiliateOptions.map((option, index) => {
+              return <SelectItem key={index} value={option.url}>{option.name}</SelectItem>
+            })}
+          </SelectContent>
+        </Select>
+        <Button disabled={!selectedUrl} onClick={activateCreatorKickback}>
+          Activate
+        </Button>
+      </div>
     </>
   )
 }
